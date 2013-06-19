@@ -13,7 +13,32 @@
 			<groupId>ayld.core</groupId>
 			<artifactId>parent</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-                </dependency>
+        </dependency>
+        <dependency>
+     		<groupId>com.sun.el</groupId>
+     		<artifactId>el-ri</artifactId>
+     		<version>1.0</version>
+  		</dependency>
+  		<dependency>
+		    <groupId>com.googlecode.ehcache-spring-annotations</groupId>
+		    <artifactId>ehcache-spring-annotations</artifactId>
+		    <version>1.2.0</version>
+		 </dependency>
+		 <dependency>
+    		<groupId>ch.qos.logback</groupId>
+    		<artifactId>logback-classic</artifactId>
+    		<version>1.0.0</version>
+		</dependency>
+		<dependency>
+        	<groupId>org.slf4j</groupId>
+        	<artifactId>slf4j-api</artifactId>
+        	<version>1.6.4</version>
+    	</dependency>
+    	<dependency>
+    		<groupId>org.apache.directory.studio</groupId>
+    		<artifactId>org.apache.commons.logging</artifactId>
+    		<version>1.1.1</version>
+		</dependency>
 	</dependencies>
 	
 	
@@ -95,7 +120,6 @@
 				<version>2.10</version>
 				<configuration>
 					<skipTests>false</skipTests>
-					
 				</configuration>
 			</plugin>
 			<plugin>

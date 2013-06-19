@@ -29,7 +29,7 @@
 	<import resource="classpath:META-INF/spring-contexts/integration.xml"/>
 	
 	<context:annotation-config />
-	<context:component-scan base-package="net.temp.app"/>
+	<context:component-scan base-package="com.ayld.app"/>
 
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 	  	<property name="locations">
@@ -43,7 +43,7 @@
 		<property name="scopes">
 	    	<map>
 	        	<entry key="view">
-	            	<bean class="net.temp.app.web.ViewJsfScope"/>
+	            	<bean class="com.ayld.app.web.ViewJsfScope"/>
 	            </entry>
 	        </map>
 	    </property>

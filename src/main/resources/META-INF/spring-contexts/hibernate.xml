@@ -40,7 +40,7 @@
 	    
 	    <property name="packagesToScan">
 			<list>
-				<value>net.qmap.app.core.domain**</value>
+				<value>com.ayld.app.domain**</value>
 			</list>
 		</property>
   	</bean>			

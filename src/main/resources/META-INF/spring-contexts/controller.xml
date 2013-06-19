@@ -19,6 +19,4 @@
         http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring 
   		http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring/ehcache-spring-1.1.xsd">
 
-	<bean id="testBean" class="net.temp.app.web.controller.TestController" scope="view"/>
-
 </beans>

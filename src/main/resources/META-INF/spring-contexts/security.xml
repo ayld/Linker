@@ -21,5 +21,5 @@
         <security:authentication-provider user-service-ref="nullDetailsService" />
     </security:authentication-manager>
 	
-	<bean id="nullDetailsService" class="net.temp.app.security.UserDetailsServiceTemplateImpl"/>
+	<bean id="nullDetailsService" class="com.ayld.app.security.UserDetailsServiceTemplateImpl"/>
 </beans>
