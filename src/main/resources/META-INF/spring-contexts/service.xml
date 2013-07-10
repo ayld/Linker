@@ -19,4 +19,7 @@
         http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring 
   		http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring/ehcache-spring-1.1.xsd">
 
+	<bean id="linkService" class="com.ayld.app.service.impl.LinksServiceImpl">
+		<property name="dao" ref="linkDao"/>
+	</bean>
 </beans>

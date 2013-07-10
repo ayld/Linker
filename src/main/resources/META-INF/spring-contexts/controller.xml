@@ -19,4 +19,7 @@
         http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring 
   		http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring/ehcache-spring-1.1.xsd">
 
+	<bean id="linksController" class="com.ayld.app.web.controller.LinksController" scope="view">
+		<property name="service" ref="linkService"/>
+	</bean>
 </beans>

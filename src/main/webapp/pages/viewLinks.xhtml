@@ -11,6 +11,18 @@
 		
 	<h:body>
 		<h:form id="links">
+			<p:dataGrid var="link" value="#{linksController.links}" columns="3"  
+		        rows="12" paginator="true"  
+		        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+		        rowsPerPageTemplate="9,12,15">  
+		  
+		        <p:panel header="" style="text-align:center">  
+		            <h:panelGrid columns="1" style="width:100%">  
+		            	<a href="#{link.url}"/>
+		            </h:panelGrid>  
+		        </p:panel>  
+		  
+		    </p:dataGrid>  
 		</h:form>
 	</h:body>
 </html>

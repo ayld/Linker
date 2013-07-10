@@ -37,6 +37,7 @@ public class Link extends BaseEntity<Integer>{
 	}
 	
 	public void setUrl(String url) {
+		// TODO validate url
 		this.url = url;
 	}
 	

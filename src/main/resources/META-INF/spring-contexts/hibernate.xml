@@ -14,27 +14,27 @@
 	
 	
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-    	<property name="driverClassName" value="${jdbc.driver}"/>
-    	<property name="url" value="${jdbc.url}"/>
-    	<property name="username" value="${jdbc.username}"/>
-    	<property name="password" value="${jdbc.password}"/>
-    	<property name="initialSize" value="${jdbc.pool.initialSize}"/>
+    	<property name="driverClassName" value="${project.jdbc.driver}"/>
+    	<property name="url" value="${project.jdbc.url}"/>
+    	<property name="username" value="${project.jdbc.username}"/>
+    	<property name="password" value="${project.jdbc.password}"/>
+    	<property name="initialSize" value="${project.jdbc.pool.initialSize}"/>
   	</bean>
 
   	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean" destroy-method="destroy">
     	<property name="dataSource" ref="dataSource"/>
     	<property name="hibernateProperties">
      		<props>
-        		<prop key="hibernate.dialect">${hibernate.dialect}</prop>
-        		<prop key="hibernate.show_sql">${hibernate.showSql}</prop>
-        		<prop key="hibernate.hbm2ddl.auto">${hibernate.ddl}</prop>
-        		<prop key="hibernate.connection.pool_size">${hibernate.poolSize}</prop>
+        		<prop key="hibernate.dialect">${project.hibernate.dialect}</prop>
+        		<prop key="hibernate.show_sql">${project.hibernate.showSql}</prop>
+        		<prop key="hibernate.hbm2ddl.auto">${project.hibernate.ddl}</prop>
+        		<prop key="hibernate.connection.pool_size">${project.hibernate.poolSize}</prop>
         		
         		
-        		<prop key="hibernate.cache.region.factory_class">${hibernate.cache.region.factory_class}</prop>
-				<prop key="hibernate.cache.use_query_cache">${hibernate.cache.use_query_cache}</prop>
-				<prop key="hibernate.cache.use_second_level_cache">${hibernate.cache.use_second_level_cache}</prop>
-				<prop key="hibernate.cache.provider_configuration_file_resource_path">${hibernate.cache.provider_configuration_file_resource_path}</prop> 
+        		<prop key="hibernate.cache.region.factory_class">${project.hibernate.cache.region.factory_class}</prop>
+				<prop key="hibernate.cache.use_query_cache">${project.hibernate.cache.use_query_cache}</prop>
+				<prop key="hibernate.cache.use_second_level_cache">${project.hibernate.cache.use_second_level_cache}</prop>
+				<prop key="hibernate.cache.provider_configuration_file_resource_path">${project.hibernate.cache.provider_configuration_file_resource_path}</prop> 
 			</props>
     	</property>  	
 	    

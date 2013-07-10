@@ -8,7 +8,18 @@
 	<name>Linker</name>
 	<url>http://linker.com</url>
 
+	<properties>
+		<deploy.instance.prefix></deploy.instance.prefix>
+	</properties>
+
 	<dependencies>
+		<dependency>
+			<groupId>org.jboss.spec</groupId>
+			<artifactId>jboss-javaee-6.0</artifactId>
+			<version>3.0.0.Final-redhat-1</version>
+			<type>pom</type>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>ayld.core</groupId>
 			<artifactId>parent</artifactId>
@@ -43,109 +54,185 @@
 	
 	
         <repositories>
+        		<repository>
+					<id>eap</id>
+					<url>http://maven.repository.redhat.com/techpreview/all</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+				</repository>
                 <repository>
                   <id>my.mvn.repo</id>
                   <url>https://github.com/ayld/mvn-repo/raw/master</url>
-                  <!-- use snapshot version -->
                   <snapshots>
                      <enabled>true</enabled>
                       <updatePolicy>always</updatePolicy>
                    </snapshots>
                 </repository>
         </repositories>
-
-
-	<build>
-		<finalName>linker</finalName>
-
-		
-		<filters>
-			<filter>project.properties</filter>
-		</filters>
-		
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-				<includes>
-					<include>hibernate.properties</include>
-					<include>logback.xml</include>
-				</includes>
-				<filtering>true</filtering>
-			</resource>
-		
-			<resource>
-				<directory>src/main/resources</directory>
-				<excludes>
-					<exclude>logback.xml</exclude>
-					<exclude>hibernate.properties</exclude>
-				</excludes>
-				<filtering>false</filtering>
-			</resource>
-		</resources>
-		
-		<plugins>
-			
-			<plugin>
-    			<groupId>org.codehaus.mojo</groupId>
-			    <artifactId>properties-maven-plugin</artifactId>
-			    <version>1.0-alpha-2</version>
-			    <executions>
-			        <execution>
-			            <phase>initialize</phase>
-			            <goals>
-			                <goal>read-project-properties</goal>
-			            </goals>
-			        </execution>
-			    </executions>
-			    <configuration>
-                    <files>
-                        <file>project.properties</file>
-                    </files>
-                </configuration>
-			</plugin>
-		
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
-				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
-				</configuration>
-			</plugin>
-			
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.10</version>
-				<configuration>
-					<skipTests>false</skipTests>
-				</configuration>
-			</plugin>
-			<plugin>
-		      <groupId>org.apache.maven.plugins</groupId>
-		      <artifactId>maven-eclipse-plugin</artifactId>
-		      <version>2.6</version>
-		    </plugin>
-		    
-		    <plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>2.1.1</version>
-				<configuration>
-					<archive>
-						<manifestEntries>
-							<Implementation-Version>${project.artifactId}-${project.version}-r${buildNumber}</Implementation-Version>
-							<Implementation-Buildtime>${timestamp}</Implementation-Buildtime>
-						</manifestEntries>
-					</archive>
-
-					<packagingExcludes>
-						WEB-INF/lib/jaxb*.jar
-					</packagingExcludes>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+		<profiles>
+			<profile>
+			<!-- When built in OpenShift the 'openshift' profile will be used when 
+				invoking mvn. -->
+			<!-- By default that is to put the resulting archive into the 'webapps' 
+				folder. -->
+			<!-- http://maven.apache.org/guides/mini/guide-building-for-different-environments.html -->
+			<id>openshift</id>
+			<build>
+				<finalName>rhc-linker</finalName>
+				<filters>
+					<filter>openshift.project.properties</filter>
+				</filters>
+				<resources>
+					<resource>
+						<directory>src/main/resources</directory>
+						<includes>
+							<include>hibernate.properties</include>
+							<include>logback.xml</include>
+						</includes>
+						<filtering>true</filtering>
+					</resource>
+				</resources>
+				<plugins>
+					<plugin>
+		    			<groupId>org.codehaus.mojo</groupId>
+					    <artifactId>properties-maven-plugin</artifactId>
+					    <version>1.0-alpha-2</version>
+					    <executions>
+					        <execution>
+					            <phase>initialize</phase>
+					            <goals>
+					                <goal>read-project-properties</goal>
+					            </goals>
+					        </execution>
+					    </executions>
+					    <configuration>
+		                    <files>
+		                        <file>openshift.project.properties</file>
+		                    </files>
+		                </configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-compiler-plugin</artifactId>
+						<version>3.1</version>
+						<configuration>
+							<source>1.7</source>
+							<target>1.7</target>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<version>2.10</version>
+						<configuration>
+							<skipTests>false</skipTests>
+						</configuration>
+					</plugin>
+					<plugin>
+				      <groupId>org.apache.maven.plugins</groupId>
+				      <artifactId>maven-eclipse-plugin</artifactId>
+				      <version>2.6</version>
+				    </plugin>
+				    <plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-war-plugin</artifactId>
+						<version>2.1.1</version>
+						<configuration>
+							<archive>
+								<manifestEntries>
+									<Implementation-Version>${project.artifactId}-${project.version}-r${buildNumber}</Implementation-Version>
+									<Implementation-Buildtime>${timestamp}</Implementation-Buildtime>
+								</manifestEntries>
+							</archive>
+							<packagingExcludes>
+								WEB-INF/lib/jaxb*.jar
+							</packagingExcludes>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>dev</id>
+			<build>
+				<finalName>linker</finalName>
+				<filters>
+					<filter>project.properties</filter>
+				</filters>
+				<resources>
+					<resource>
+						<directory>src/main/resources</directory>
+						<includes>
+							<include>hibernate.properties</include>
+							<include>logback.xml</include>
+						</includes>
+						<filtering>true</filtering>
+					</resource>
+				</resources>
+				<plugins>
+					<plugin>
+		    			<groupId>org.codehaus.mojo</groupId>
+					    <artifactId>properties-maven-plugin</artifactId>
+					    <version>1.0-alpha-2</version>
+					    <executions>
+					        <execution>
+					            <phase>initialize</phase>
+					            <goals>
+					                <goal>read-project-properties</goal>
+					            </goals>
+					        </execution>
+					    </executions>
+					    <configuration>
+		                    <files>
+		                        <file>project.properties</file>
+		                    </files>
+		                </configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-compiler-plugin</artifactId>
+						<version>3.1</version>
+						<configuration>
+							<source>1.7</source>
+							<target>1.7</target>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<version>2.10</version>
+						<configuration>
+							<skipTests>false</skipTests>
+						</configuration>
+					</plugin>
+					<plugin>
+				      <groupId>org.apache.maven.plugins</groupId>
+				      <artifactId>maven-eclipse-plugin</artifactId>
+				      <version>2.6</version>
+				    </plugin>
+				    <plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-war-plugin</artifactId>
+						<version>2.1.1</version>
+						<configuration>
+							<archive>
+								<manifestEntries>
+									<Implementation-Version>${project.artifactId}-${project.version}-r${buildNumber}</Implementation-Version>
+									<Implementation-Buildtime>${timestamp}</Implementation-Buildtime>
+								</manifestEntries>
+							</archive>
+							<packagingExcludes>
+								WEB-INF/lib/jaxb*.jar
+							</packagingExcludes>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
 
